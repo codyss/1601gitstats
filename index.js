@@ -1,26 +1,26 @@
 var scraperjs = require('scraperjs'),
     router = new scraperjs.Router(),
-    url = 'https://github.com/codyss';
+    url = 'https://github.com/',
+    users = ['codyss', 'apackin', 'jmeeke02'];
 
-router
-    .otherwise(function(url) {
-    console.log("Url '"+url+"' couldn't be routed.");
-});
 
-var path = {};
+var sjs = require('scraperjs/src/Scraper');
 
-router.on(url)
-    .createStatic()
-    .scrape(function($) {
-        return $('.contrib-number').map(function() {
-            console.log($(this).text());
-        
-        }).get();
-    })
-    .then(function(links, utils) {
-        path[utils.params.id] = links
-    })
-
-// router.route(url, function() {
-//     console.log("i'm done");
-// });
+users.forEach(function (user) {
+    sjs.StaticScraper
+        .create('https://github.com/'+user)
+        .scrape(function($) {
+            return $('.contrib-number').map(function() {
+                return $(this).text();
+            }).get()
+            // .filter(function(elm) {
+            //     return elm != 'More';
+            // });
+        })
+        .then(function(news) {
+            // news.forEach(function(elm) {
+                console.log(user);
+                console.log(news);
+            // });
+        });
+})
