@@ -1,7 +1,10 @@
 #myDiv {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
+}
+
+#mainBody {
+  margin-top: 10px;
 }
 
 nav {
@@ -19,8 +22,20 @@ nav {
 
 #streakChart {
   margin-left: 50px;
+  margin-bottom: 20px;
 }
 
 #currentStreakChart {
   margin-right: 50px;
+  margin-bottom: 20px;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+h2 {
+  margin-top: 10px; 
+  text-align: center;
+  font-family: Comic Sans MS;
 }
