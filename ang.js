@@ -25,10 +25,15 @@ app.controller('MainCtrl', function ($firebaseObject, $scope) {
   })
   .then(() => {
     data = {};
-    data.x = $scope.loadedLeaderboard.map(std => {
+    data.data = $scope.loadedLeaderboard
+    data.data.sort(function(a,b) {
+      return parseInt(a['Contributions'].slice(0,3).trim()) - parseInt(b['Contributions'].slice(0,3).trim())
+    })
+    data.data.reverse()
+    data.x = data.data.map(std => {
       return std.fullName
     })
-    data.y = $scope.loadedLeaderboard.map(std => {
+    data.y = data.data.map(std => {
       return std['Contributions'].slice(0,3)
     })
     var layout = {
@@ -38,12 +43,24 @@ app.controller('MainCtrl', function ($firebaseObject, $scope) {
     Plotly.newPlot('myDiv', [data], layout);
   })
   .then(() => {
-    longestStreak = {};
-    longestStreak.x = $scope.loadedLeaderboard.map(std => {
+    longestStreak = {data: $scope.loadedLeaderboard};
+    longestStreak.data = longestStreak.data.map(item => {
+      if(item['LongestStreak']) {
+        return item
+      } else {
+        item['LongestStreak'] = "0 days";
+        return item
+      }
+    })
+    console.log(longestStreak.data)
+    longestStreak.data.sort(function(a,b) {
+      return parseInt(b['LongestStreak'].slice(0,2).trim()) - parseInt(a['LongestStreak'].slice(0,2).trim())
+    })
+    longestStreak.x = longestStreak.data.map(std => {
       if(std.fullName) return std.fullName
       else return std.gitName
     })
-    longestStreak.y = $scope.loadedLeaderboard.map(std => {
+    longestStreak.y = longestStreak.data.map(std => {
       if (std['LongestStreak']) {
         return std['LongestStreak'].slice(0,2);
       } else {
@@ -57,12 +74,26 @@ app.controller('MainCtrl', function ($firebaseObject, $scope) {
     Plotly.newPlot('streakChart', [longestStreak], layout);
   })
   .then(() => {
-    currentStreak = {};
-    currentStreak.x = $scope.loadedLeaderboard.map(std => {
-      if(std.fullName) return std.fullName
-      else return std.gitName
+    currentStreak = {data: $scope.loadedLeaderboard};
+    currentStreak.data = currentStreak.data.map(item => {
+      if(item['CurrentStreak']) {
+        return item
+      } else {
+        item['CurrentStreak'] = "0 days";
+        return item
+      } 
     })
-    currentStreak.y = $scope.loadedLeaderboard.map(std => {
+    currentStreak.data.sort(function(a,b) {
+      return parseInt(b['CurrentStreak'].slice(0,2).trim()) - parseInt(a['CurrentStreak'].slice(0,2).trim())
+    })
+    currentStreak.x = currentStreak.data.map(std => {
+      if(std.fullName) {
+        return std.fullName;
+      } else {
+        return std.gitName;
+      }
+    })
+    currentStreak.y = currentStreak.data.map(std => {
       if (std['CurrentStreak']) {
         return std['CurrentStreak'].slice(0,2);
       } else {
