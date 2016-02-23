@@ -18,10 +18,19 @@ app.controller('MainCtrl', function ($firebaseObject, $scope) {
   // $scope.leaderboard = leaderboad;
   // console.log($scope.leaderboard)
 
+
   $firebaseObject(new Firebase('https://kimonocrawlsapi123.firebaseio.com/')).$loaded().then(res => {
     var list = res.kimono.api['9echjkze'].latest.results['collection1'];
     $scope.loadedLeaderboard = list;
     console.log(list);
+  })
+  .then(() => {
+    $scope.totalWeekCommits = 0; 
+    $scope.totalWeekPulls = 0;  
+    $scope.loadedLeaderboard.forEach(std => {
+      if (std.lastWeekCommits) $scope.totalWeekCommits += parseInt(std.lastWeekCommits);
+      if (std.lastWeekPulls) $scope.totalWeekPulls += parseInt(std.lastWeekPulls);
+    })
   })
   .then(() => {
     data = {};
@@ -31,7 +40,8 @@ app.controller('MainCtrl', function ($firebaseObject, $scope) {
     })
     data.data.reverse()
     data.x = data.data.map(std => {
-      return std.fullName
+      if(std.fullName) return std.fullName
+      else return std.gitName
     })
     data.y = data.data.map(std => {
       return std['Contributions'].slice(0,3)
@@ -52,7 +62,6 @@ app.controller('MainCtrl', function ($firebaseObject, $scope) {
         return item
       }
     })
-    console.log(longestStreak.data)
     longestStreak.data.sort(function(a,b) {
       return parseInt(b['LongestStreak'].slice(0,2).trim()) - parseInt(a['LongestStreak'].slice(0,2).trim())
     })

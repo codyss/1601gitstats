@@ -17,7 +17,7 @@
   </head>
   <body ng-app="gitstats">
   
-     <nav class="navbar navbar-inverse navbar-fixed-top">
+     <!-- <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -32,9 +32,9 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
           </ul>
-        </div><!--/.nav-collapse -->
+        </div>
       </div>
-    </nav>
+    </nav> -->
 
 
 <div class="container">
@@ -43,12 +43,13 @@
 
 </div><!-- /.container -->
 
-<div ng-controller="MainCtrl">
+<div id="mainBody" ng-controller="MainCtrl">
+  <h2 class="ng-cloak">1601 Contributed <bold>{{totalWeekCommits}}</bold> Commits and <bold>{{totalWeekPulls}}</bold> Pull Requests Over the Last Week</h2>
   <div id="myDiv" style="width: 800px; height: 500px;"><!-- Plotly chart will be drawn inside this DIV --></div>
   <div class='row'>
   <div class="container" id="toCenter">
-  <div id="streakChart" style="width: 500px; height: 300px;"><!-- Plotly chart will be drawn inside this DIV --></div>
-  <div id="currentStreakChart" style="width: 500px; height: 300px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <div id="streakChart" style="width: 500px; height: 350px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <div id="currentStreakChart" style="width: 500px; height: 350px;"><!-- Plotly chart will be drawn inside this DIV --></div>
   </div>
   </div>
 </div>
