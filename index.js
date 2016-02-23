@@ -13,9 +13,6 @@ users.forEach(function (user) {
             return $('.contrib-number').map(function() {
                 return $(this).text();
             }).get()
-            // .filter(function(elm) {
-            //     return elm != 'More';
-            // });
         })
         .then(function(news) {
             // news.forEach(function(elm) {
