@@ -1,4 +1,4 @@
-app.module('gitstats', ['firebase', 'ui-router']);
+var app = angular.module('gitstats', ['firebase', 'ui-router']);
 
 app.config(function($urlRouterProvider) {
   $urlRouterProvider.when('/', '/index')
