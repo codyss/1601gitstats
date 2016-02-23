@@ -17,6 +17,5 @@
   },
   "homepage": "https://github.com/codyss/1601gitstats#readme",
   "dependencies": {
-    "scraperjs": "^1.2.0"
   }
 }
